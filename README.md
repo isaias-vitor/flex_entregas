@@ -56,6 +56,34 @@ Dessa forma, é possível executar o mesmo método `simular()` passando qualquer
 
 Exemplo:
 
+## Polimorfismo Aplicado
+
+O polimorfismo neste projeto foi aplicado por meio da interface `MeioDeTransporte`, que define um contrato que todas as classes de transporte devem seguir. Essa interface obriga que cada meio de transporte implemente os métodos:
+
+- `calcularTempo(double distanciaEmKm)`
+- `calcularCusto(double distanciaEmKm)`
+- `podeOperar({required bool chuva})`
+- `nome`
+
+Com isso, o simulador não precisa conhecer os detalhes internos de cada meio de transporte. Ele apenas depende de que qualquer objeto passado para ele seja um `MeioDeTransporte`, ou seja, que implemente os métodos definidos na interface.
+
+Na prática, isso significa que o mesmo código do simulador consegue funcionar com diferentes meios de transporte, sem a necessidade de alterar sua lógica. Cada classe cuida internamente de sua própria regra de funcionamento, como velocidade, custo e restrições climáticas.
+
+### Exemplo de aplicação do polimorfismo:
+
 ```dart
 SimuladorDeEntrega simulador = SimuladorDeEntrega(Drone());
 simulador.simular(distanciaEmKm: 50.0, chuva: true);
+```
+
+Nesse exemplo, o simulador pode receber qualquer objeto que implemente a interface `MeioDeTransporte`, como `Drone()`, `Moto()`, `Cavalo()` ou `Bicicleta()`. O comportamento será adaptado de acordo com a implementação de cada classe, sem que o simulador precise ser alterado.
+
+### Benefícios do uso de polimorfismo neste projeto:
+
+- Redução de acoplamento entre classes.
+- Facilidade para manutenção e extensão do sistema.
+- Adição de novos meios de transporte sem necessidade de alterar o simulador.
+- Código mais limpo, organizado e orientado a objetos de forma correta.
+
+Se, no futuro, for necessário adicionar novos meios de transporte, basta criar uma nova classe que implemente a interface `MeioDeTransporte`. Nenhuma alteração no código do simulador será necessária, pois ele continuará aceitando qualquer classe que atenda ao contrato estabelecido pela interface.
+
